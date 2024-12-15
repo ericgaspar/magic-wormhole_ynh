@@ -11,22 +11,28 @@ ynh_script_progression "Stopping $app's systemd service..."
 ynh_systemctl --service="$app" --action="stop"
 
 #=================================================
-# DOWNLOAD, CHECK AND UNPACK SOURCE
+# INSTALL PYTHON DEPENDENCIES
 #=================================================
-ynh_script_progression "Upgrading source files..."
+ynh_script_progression "Installing Python dependencies..."
 
-ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env data"
+ynh_safe_rm $install_dir
+
+pushd $install_dir
+    python3 -m venv $install_dir/venv
+    ynh_hide_warnings $install_dir/venv/bin/pip install --upgrade pip 
+    ynh_hide_warnings $install_dir/venv/bin/pip install magic-wormhole-transit-relay==$(ynh_app_upstream_version)
+popd
+
+chown -R $app:$app "$install_dir"
 
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
 ynh_script_progression "Upgrading system configurations related to $app..."
 
-ynh_config_add_nginx
-
 ynh_config_add_systemd
 
-yunohost service add "$app" --description="A short description of the app" --log="/var/log/$app/$app.log"
+yunohost service add "$app" --description="Transit Relay server for Magic-Wormhole" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
