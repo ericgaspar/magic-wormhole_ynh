@@ -12,6 +12,7 @@ pushd $install_dir
     python3 -m venv $install_dir/venv
     ynh_hide_warnings $install_dir/venv/bin/pip install --upgrade pip 
     ynh_hide_warnings $install_dir/venv/bin/pip install magic-wormhole-transit-relay==$(ynh_app_upstream_version)
+    ynh_hide_warnings $install_dir/venv/bin/pip install magic-wormhole-mailbox-server
 popd
 
 chown -R $app:$app "$install_dir"
