@@ -4,6 +4,14 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
+# FIND AND OPEN A PORT
+#=================================================
+ynh_script_progression "Configuring firewall..."
+
+# Reserve UDP Port range $port
+ynh_hide_warnings yunohost firewall allow UDP -4 $port
+
+#=================================================
 # INSTALL PYTHON DEPENDENCIES
 #=================================================
 ynh_script_progression "Installing Python dependencies..."
