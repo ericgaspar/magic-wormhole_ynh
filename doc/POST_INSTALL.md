@@ -1,1 +1,1 @@
-`wormhole --transit-helper=tcp:__DOMAIN__:__PORT__ send  file-to-send`
+`wormhole --transit-helper=tcp:__DOMAIN__:__PORT__ send file-to-send`
