@@ -3,27 +3,10 @@ Description=Magic-Wormhole
 After=network.target
 
 [Service]
-
 User=__APP__
 Group=__APP__
 WorkingDirectory=__INSTALL_DIR__/
-ExecStart=__INSTALL_DIR__/twistd3 transitrelay
-
-
-[Unit]
-Description=Example Web Server
-
-[Service]
-User=nobody
-Group=nobody
-
-WorkingDirectory=__INSTALL_DIR__/
-
-ExecStart=/usr/bin/twistd \
-    --nodaemon \
-    --pidfile= \
-    web --listen tcp:8080 --path .
-
+ExecStart=__INSTALL_DIR__/venv/bin/twist transitrelay --port=tcp:__PORT__
 Restart=always
 
 [Install]
